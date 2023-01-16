@@ -262,6 +262,12 @@
     - Generate controller
         - php artisan make:controller API/AuthController
 - We can access the traits inside the controller use HttpResponses;
+  - Create the Task Controller with resource
+    - php artisan make:controller API/TasksController -r
+    - Create the Task Model and Migration
+      - php artisan make:model Task -m 
+  - Add the route file for tasks
+
 
 
 
