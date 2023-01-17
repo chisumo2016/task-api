@@ -283,6 +283,26 @@
             php artisan make:request API/LoginUserRequest  
         User should be able to login
         New token will be generated, can be used to restrict the access routes
+        Write logic inside the AuthController in login method
+
+## PROTECTING ROUTES
+    Two types of routes
+        Public Route
+        Protected Route
+    We're going to use the middleware of auth:sanctum, to protected authennticated routes
+    TEST AN API
+        ACCEPT 
+        CONTENT-TYPE
+     GET: http://tasks.test/api/tasks
+     401 Unauthorized , we're using laravel sanctum middleware
+    
+    We need to user Beearer Token  , pass the token into Authorization Tab on postman
+    Token must protected  for all cost
+        SET AS NEW VARIABLE
+            Name: Sanctum_Token
+            Value: Token
+            Scope: Global
+    
         
 
 
