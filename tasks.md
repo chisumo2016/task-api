@@ -269,14 +269,21 @@
       - php artisan make:model Task -m 
   - Add the route file for tasks
 
-### REGISTRATION 
+### REGISTRATION  
  - Register Functionality
      -In the user Model we should have  use HasApiTokens; 
    - Validate the incoming request via register()
        php artisan make:request API/StoreUserRequest   
    - Write a logic into register AuthController
 
-
+### LOGIN
+    Implement the register funcctionality
+        Send back an error message
+        Validate the user
+            php artisan make:request API/LoginUserRequest  
+        User should be able to login
+        New token will be generated, can be used to restrict the access routes
+        
 
 
 
