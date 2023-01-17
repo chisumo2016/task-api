@@ -180,7 +180,8 @@
     - Create Auth login (create with laravel breeze installation)
             POST :  http://api-book-project.test/api/login
              HEADER  
-                Accept               application/json
+                Accept                      application/vnd.api+json
+                Content-Type              application/vnd.api+json
 
             BODY (Send the data to the server)
                         form-data
@@ -268,6 +269,12 @@
       - php artisan make:model Task -m 
   - Add the route file for tasks
 
+### REGISTRATION 
+ - Register Functionality
+     -In the user Model we should have  use HasApiTokens; 
+   - Validate the incoming request via register()
+       php artisan make:request API/StoreUserRequest   
+   - Write a logic into register AuthController
 
 
 
