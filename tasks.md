@@ -302,8 +302,15 @@
             Name: Sanctum_Token
             Value: Token
             Scope: Global
+### MIGRATION , MODEL  AND FACTORY (TASKS)
+    - start with migration
     
-        
+        One Task belongsTo User
+        One User can have multiple Task
+    - Add the foreignid table  migration
+    - Add mass assigment and relations
+    - Make a factory 
+        php artisan make:factory API\TaskFactory   
 
 
 
