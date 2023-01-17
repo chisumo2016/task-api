@@ -58,6 +58,7 @@ class TasksController extends Controller
     {
         return  $this->isNotAuthorized($task) ? $this->isNotAuthorized($task) : new TaskResource($task);
        // return  new TaskResource($task);
+       // return  TaskResource::make($task);
     }
 
     /**

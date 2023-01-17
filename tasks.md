@@ -317,6 +317,16 @@
     - Create a TaksResource
     - Start with data member(contain primary data of doc), will be added by resource
     - Vlidate the Task Request
+    - Creat all the CRUD functionality
+
+## LOGOUT  FUNCTIONALITY
+    - Implement the logout functionality in AuthController
+    - You can put the expired date in app/Console/Kernel.php
+            $schedule->command('sanctum:prune-expired --hours=24')->daily();
+    - You can put the config/sanctum.php
+    Command 
+         php artisan schedule:list   
+         php artisan schedule:work   
 
 
 
