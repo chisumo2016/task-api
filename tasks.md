@@ -312,6 +312,13 @@
     - Make a factory 
         php artisan make:factory API\TaskFactory   
 
+## Task Functionality
+    -Index(){}
+    - Create a TaksResource
+    - Start with data member(contain primary data of doc), will be added by resource
+    - Vlidate the Task Request
+
+
 
 
 

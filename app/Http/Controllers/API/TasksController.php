@@ -3,73 +3,78 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\StoreTaskRequest;
+use App\Http\Resources\TaskResource;
+use App\Models\Task;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TasksController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return response()->json('Test');
+        return TaskResource::collection(
+            Task::all()
+            //Task::where('user_id', Auth::user()->id)->get()
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return TaskResource
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        //
+        $request->validated($request->all());
+
+        $task = Task::create([
+            'user_id'       => Auth::user()->id,
+            'name'          => $request->name,
+            'description'   => $request->description,
+            'priority'      => $request->priority,
+        ]);
+
+        return new TaskResource($task);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int  $task
+     * @return TaskResource
      */
-    public function show($id)
+    public function show(Task $task)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return  $this->isNotAuthorized($task) ? $this->isNotAuthorized($task) : new TaskResource($task);
+       // return  new TaskResource($task);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int  $task
+     * @return TaskResource|\Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        if (Auth::user()->id !== $task->user_id){
+            return $this->error('', 'You are not authorized to make this request',403);
+        }
+
+        $task->update($request->all());
+        return  new TaskResource($task);
     }
 
     /**
@@ -78,8 +83,17 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        return  $this->isNotAuthorized($task) ? $this->isNotAuthorized($task) :$task->delete();
+        //$task->delete();
+        //return  response(null, 204);
+    }
+
+    private  function  isNotAuthorized($task)
+    {
+        if (Auth::user()->id !== $task->user_id){
+            return $this->error('', 'You are not authorized to make this request',403);
+        }
     }
 }
